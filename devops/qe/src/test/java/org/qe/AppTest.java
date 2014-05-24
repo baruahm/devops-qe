@@ -23,7 +23,7 @@ public class AppTest extends TestBase{
     public void testDeploymentMachineReachable(){
         System.out.println("Testing if app deployment machine is reachable: "+getPropValues("appIP"));
         try {
-            Assert.assertTrue(inet.isReachable(2000), "App machine is not reachable");
+            Assert.assertTrue(inet.isReachable(500), "App machine is not reachable");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
