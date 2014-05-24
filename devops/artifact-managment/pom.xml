@@ -7,7 +7,7 @@
     <artifactId>devops</artifactId>
     <version>1.1-SNAPSHOT</version>
   </parent>
-  <artifactId>artifact-managment</artifactId>
+  <artifactId>devops-qe-jboss-artifact</artifactId>
   <packaging>war</packaging>
   <name>artifact-managment Maven Webapp</name>
   <url>http://maven.apache.org</url>
@@ -20,6 +20,6 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>artifact-managment</finalName>
+    <finalName>devops-qe-jboss-artifact</finalName>
   </build>
 </project>
