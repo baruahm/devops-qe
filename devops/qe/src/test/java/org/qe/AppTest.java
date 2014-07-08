@@ -21,12 +21,27 @@ public class AppTest extends TestBase{
 
     @Test
     public void testDeploymentMachineReachable(){
-        System.out.println("Testing if app deployment machine is reachable: "+getPropValues("appIP"));
+        //TODO: Fix the below code which does not work sometimes. For now performing a repeated test
+/*        System.out.println("Testing if app deployment machine is reachable: "+getPropValues("appIP"));
         try {
             Assert.assertTrue(inet.isReachable(500), "App machine is not reachable");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            Assert.fail("testDeploymentMachineReachable(): App machine is not reachable");
+        }*/
+        System.out.println("Testing if app deployment machine is reachable: "+getPropValues("appIP"));
+        try {
+            url = new URL("http://"+appIP+":"+appPort+"/"+appPath);
+            System.out.println("Testing URL: "+url);
+            connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+            code = connection.getResponseCode();
+            System.out.println("Reponse code is: "+code);
+            Assert.assertTrue((code == 200), "Application is not running on the URL"+url);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail("testDeploymentMachineReachable(): App machine is not reachable");
         }
     }
 
@@ -40,11 +55,11 @@ public class AppTest extends TestBase{
             connection.connect();
             code = connection.getResponseCode();
             System.out.println("Reponse code is: "+code);
+            Assert.assertTrue((code == 200), "Application is not running on the URL"+url);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            Assert.fail("testAppRunning(): Application is not running on the URL"+url);
         }
-        Assert.assertTrue((code == 200), "Application is not running on the URL"+url);
     }
 
     //This test is meant to fail if app is deployed on non 8080 port. It will pass
@@ -60,11 +75,11 @@ public class AppTest extends TestBase{
             connection.connect();
             code = connection.getResponseCode();
             System.out.println("Reponse code is: "+code);
+            Assert.assertTrue((code == 200), "Application is not running on the URL"+url1);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            Assert.fail("testAppRunningOn8081port(): Application is not running on the URL"+url1);
         }
-        Assert.assertTrue((code == 200), "Application is not running on the URL"+url1);
     }
 
 
@@ -78,12 +93,13 @@ public class AppTest extends TestBase{
         HttpResponse response = httpclient.execute(new HttpGet(url.toURI()));
         HttpEntity entity = response.getEntity();
         responseString = EntityUtils.toString(entity, "UTF-8");
-        } catch (Exception e) {
-            System.out.println("Network exception: "+e.getMessage());
-        }
         Assert.assertTrue(responseString.contains(expectedResponseStr),
                 "Response did not contain expected response string Actual: "+ responseString +
                 "Expected substring: "+expectedResponseStr);
+        } catch (Exception e) {
+            System.out.println("Network exception: "+e.getMessage());
+            Assert.fail("testApplicationPage(): Network exception encountered. Marking test to fail.");
+        }
     }
 
     @Test(dependsOnMethods="testAppRunning")
@@ -103,11 +119,12 @@ public class AppTest extends TestBase{
         HttpResponse response = httpclient.execute(new HttpGet(url2.toURI()));
         HttpEntity entity = response.getEntity();
         responseString = EntityUtils.toString(entity, "UTF-8");
-        } catch (Exception e) {
-            System.out.println("Network exception: "+e.getMessage());
-        }
         Assert.assertTrue(responseString.contains(expectedResponseStr),
                 "Response did not contain expected response string Actual: "+ responseString +
                 "Expected substring: "+expectedResponseStr);
+        } catch (Exception e) {
+            System.out.println("Network exception: "+e.getMessage());
+            Assert.fail("testJBossRunning(): Network exception encountered. Marking test to fail.");
+        }
     }
 }
