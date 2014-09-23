@@ -11,6 +11,7 @@ public class TestBase {
     String appIP = getPropValues("appIP");
     String appPort = getPropValues("port");
     String appPath = getPropValues("appPath");
+    String testString = getPropValues("testString");
 
     InetAddress inet;
 
