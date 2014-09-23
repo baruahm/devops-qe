@@ -86,7 +86,7 @@ public class AppTest extends TestBase{
     @Test(dependsOnMethods="testAppRunning")
     public void testApplicationPage(){
         String responseString = null;
-        String expectedResponseStr = "DevOps App with Artifact Management";
+        String expectedResponseStr = "Please enter your customer ID and password and click-123 Submit";
         HttpClient httpclient = new DefaultHttpClient();
 
         try {
