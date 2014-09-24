@@ -92,6 +92,7 @@ public class AppTest extends TestBase{
     public void testApplicationPage(){
         String responseString = null;
         String expectedResponseStr = "Welcome to Dukes Banks - " + buildId;
+
         HttpClient httpclient = new DefaultHttpClient();
 
         try {
