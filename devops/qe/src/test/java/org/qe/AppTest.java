@@ -91,7 +91,7 @@ public class AppTest extends TestBase{
     @Test(dependsOnMethods="testAppRunning")
     public void testApplicationPage(){
         String responseString = null;
-        String expectedResponseStr = "Welcome to Dukes Banks - " + buildId + ".Please enter your customer ID and password and click";
+        String expectedResponseStr = "Welcome to Dukes Banks - " + buildId;
         HttpClient httpclient = new DefaultHttpClient();
 
         try {
