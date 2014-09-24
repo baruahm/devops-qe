@@ -12,6 +12,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class AppTest extends TestBase{
@@ -19,6 +20,10 @@ public class AppTest extends TestBase{
     HttpURLConnection connection;
     int code = 0;
 
+    @BeforeTest
+    public void setprops() {
+    	
+    }
     @Test
     public void testDeploymentMachineReachable(){
         //TODO: Fix the below code which does not work sometimes. For now performing a repeated test
@@ -31,7 +36,7 @@ public class AppTest extends TestBase{
         }*/
         System.out.println("Testing if app deployment machine is reachable: "+getPropValues("appIP"));
         try {
-            url = new URL("http://"+appIP+":"+appPort+"/"+appPath);
+            url = new URL("http://"+getPropValues("appIP")+":"+getPropValues("port")+"/"+getPropValues("appPath"));
             System.out.println("Testing URL: "+url);
             connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod("GET");
@@ -48,7 +53,7 @@ public class AppTest extends TestBase{
     @Test
     public void testAppRunning(){
         try {
-            url = new URL("http://"+appIP+":"+appPort+"/"+appPath);
+        	url = new URL("http://"+getPropValues("appIP")+":"+getPropValues("port")+"/"+getPropValues("appPath"));
             System.out.println("Testing URL: "+url);
             connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod("GET");
@@ -68,7 +73,7 @@ public class AppTest extends TestBase{
     public void testAppRunningOn8081port(){
         URL url1 = null;
         try {
-            url1 = new URL("http://"+appIP+":8081/"+appPath);
+            url1 = new URL("http://"+getPropValues("appIP")+":8081/"+getPropValues("appPath"));
             System.out.println("Testing URL: "+url1);
             connection = (HttpURLConnection)url1.openConnection();
             connection.setRequestMethod("GET");
@@ -86,7 +91,7 @@ public class AppTest extends TestBase{
     @Test(dependsOnMethods="testAppRunning")
     public void testApplicationPage(){
         String responseString = null;
-        String expectedResponseStr = "Please enter your customer ID and password and click " + testString + " Submit";
+        String expectedResponseStr = "Please enter your customer ID and password and click " + getPropValues("testString") + " Submit";
         HttpClient httpclient = new DefaultHttpClient();
 
         try {
@@ -106,7 +111,7 @@ public class AppTest extends TestBase{
     public void testJBossRunning(){
         URL url2 = null;
         try {
-            url2 = new URL("http://"+appIP+":"+appPort);
+        	url2 = new URL("http://"+getPropValues("appIP")+":" + getPropValues("port"));
         } catch (MalformedURLException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
