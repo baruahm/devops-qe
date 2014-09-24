@@ -86,7 +86,7 @@ public class AppTest extends TestBase{
     @Test(dependsOnMethods="testAppRunning")
     public void testApplicationPage(){
         String responseString = null;
-        String expectedResponseStr = "Please enter your customer ID and password and click " + testString + " Submit ";
+        String expectedResponseStr = "Please enter your customer ID and password and click " + testString + " Submit";
         HttpClient httpclient = new DefaultHttpClient();
 
         try {
