@@ -69,7 +69,8 @@ public class AppTest extends TestBase{
 
     //This test is meant to fail if app is deployed on non 8080 port. It will pass
     //if deployed on 8081 port
-    @Test
+
+    @Test(enabled=false)
     public void testAppRunningOn8081port(){
         URL url1 = null;
         try {
